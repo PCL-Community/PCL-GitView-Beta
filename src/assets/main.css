@@ -1,0 +1,26 @@
+@import "./base.css";
+
+body {
+    margin: 0;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    user-select: none;
+}
+
+/* @keyframes shake {
+    0% {
+        rotate: 0deg;
+    }
+    30% {
+        rotate: -1deg;
+    }
+    60% {
+        rotate: 1deg;
+    }
+    90% {
+        rotate: -1deg;
+    }
+    100% {
+        rotate: 0deg;
+    }
+} */
