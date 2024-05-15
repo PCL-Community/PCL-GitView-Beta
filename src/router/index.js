@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 
 const gen403Routes = (pathList) => {
     return pathList.map((path) => ({
@@ -8,24 +8,24 @@ const gen403Routes = (pathList) => {
 };
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHashHistory(),
     routes: [
         {
             path: "/",
             component: () => import("../views/HomeView.vue"),
         },
         {
-            path: "/issue/overview",
-            component: () => import("../views/issue/OverView.vue"),
+            path: "/IssuesOverview",
+            component: () => import("../views/issues/OverView.vue"),
         },
         // 403 (Not Complete Pages) (Only For Deploy Environment)
         ...gen403Routes([
-            "/intro",
-            "/issue/label",
-            "/issue/changetrend",
-            "/disc/overview",
-            "/disc/catgory",
-            "/disc/changetrend",
+            "/Intro",
+            "/IssuesLabel",
+            "/IssuesChangeTrend",
+            "/DiscOverview",
+            "/DiscCatgory",
+            "/DiscChangeTrend",
         ]),
         // 404
         {

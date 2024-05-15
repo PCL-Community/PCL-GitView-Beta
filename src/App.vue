@@ -20,8 +20,10 @@ const open_close_sidebar = () => {
             </el-aside>
             <el-container>
                 <el-main>
-                    <RouterView />
-                </el-main>
+                    <Suspense>
+                        <RouterView />
+                    </Suspense>
+                </el-main>  
                 <el-footer height="40px">
                     <span>
                         Copyright &copy;{{

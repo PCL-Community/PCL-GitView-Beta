@@ -1,42 +1,37 @@
 <script setup>
 import { ref } from "vue";
 import SidebarButtonGroup from "./SidebarButtonGroup.vue";
-
-const pathname = ref(window.location.pathname);
-const refetchPath = () => {
-    pathname.value = window.location.pathname;
-};
 </script>
 
 <template>
     <el-scrollbar class="sidebar">
         <sidebar-button-group title="欢迎！">
-            <el-link :type="pathname === '/intro' ? 'primary' : 'default'" @click="refetchPath()" href="/intro">
+            <el-link :type="$router.currentRoute.value['path'] === '/Intro' ? 'primary' : 'default'" @click="refetchPath()" href="/#/Intro">
                 项目简介
             </el-link>
         </sidebar-button-group>
         <sidebar-button-group title="Issues 大区">
-            <el-link :type="pathname === '/issue/overview' ? 'primary' : 'default'" @click="refetchPath()" href="/issue/overview">
+            <el-link :type="$router.currentRoute.value['path'] === '/IssuesOverview' ? 'primary' : 'default'" @click="refetchPath()" href="/#/IssuesOverview">
                 总览
             </el-link>
-            <el-link :type="pathname === '/issue/label' ? 'primary' : 'default'" @click="refetchPath()" href="/issue/label">
+            <el-link :type="$router.currentRoute.value['path'] === '/IssuesLabel' ? 'primary' : 'default'" @click="refetchPath()" href="/#/IssuesLabel">
                 标签分布
             </el-link>
-            <el-link :type="pathname === '/issue/changetrend' ? 'primary' : 'default'" @click="refetchPath()" href="/issue/changetrend">
+            <el-link :type="$router.currentRoute.value['path'] === '/IssuesChangeTrend' ? 'primary' : 'default'" @click="refetchPath()" href="/#/IssuesChangeTrend">
                 变化趋势
             </el-link>
         </sidebar-button-group>   
         <sidebar-button-group title="Discussions 大区">
-            <el-link :type="pathname === '/disc/overview' ? 'primary' : 'default'" @click="refetchPath()" href="/disc/overview">
+            <el-link :type="$router.currentRoute.value['path'] === '/DiscOverview' ? 'primary' : 'default'" @click="refetchPath()" href="/#/DiscOverview">
                 总览
             </el-link>
-            <el-link :type="pathname === '/disc/catgory' ? 'primary' : 'default'" @click="refetchPath()" href="/disc/catgory">
+            <el-link :type="$router.currentRoute.value['path'] === '//DiscCatgory' ? 'primary' : 'default'" @click="refetchPath()" href="/#//DiscCatgory">
                 分区预览
             </el-link>
-            <el-link :type="pathname === '/disc/changetrend' ? 'primary' : 'default'" @click="refetchPath()" href="/disc/changetrend">
+            <el-link :type="$router.currentRoute.value['path'] === '//DiscChangeTrend' ? 'primary' : 'default'" @click="refetchPath()" href="/#//DiscChangeTrend">
                 变化趋势
             </el-link>
-        </sidebar-button-group>   
+        </sidebar-button-group> 
     </el-scrollbar>
 </template>
 

@@ -1,9 +1,34 @@
 <script setup>
 import LogoCard from "@/components/LogoCard.vue";
+import { onMounted, ref } from "vue";
 
 const gh = () => {
     window.open("https://github.com/PCL-Community/PCL-GitView", "_blank");
 };
+
+onMounted(async () => {
+    try {
+        const labelList = await fetchLabel();
+        if (labelList.length > 0) {
+            localStorage.setItem("X-PG-Labels", JSON.stringify(labelList));
+        }
+    } catch (error) {
+        console.error("获取标签失败：", error);
+    }
+});
+
+const btnColor = ref(null)
+const matchTheme = (e) => {
+    if (e.matches) {
+        btnColor.value = "#0665D2"
+    } else {
+        btnColor.value = "#0c72e7"
+    }
+};
+window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", matchTheme);
+matchTheme(window.matchMedia("(prefers-color-scheme: dark)"));
 </script>
 
 <template>
@@ -14,10 +39,10 @@ const gh = () => {
             <span class="subtitle"> 基于 Vue 和 GitHub Rest API 全新构建 </span>
             <br /><br />
             <span>
-                <el-button type="primary" @click="$router.push('/intro')">
-                    什么是 PCL GitView？
+                <el-button type="primary" :color="btnColor" @click="$router.push('/Intro')">
+                    什么是 PCL GitView ?
                 </el-button>
-                <el-button type="info" @click="$router.push('/issue/overview')">
+                <el-button type="info" @click="$router.push('/IssuesOverview')">
                     快速开始
                 </el-button>
                 <el-button type="info" @click="gh()">GitHub</el-button>
@@ -58,7 +83,6 @@ div.home-view {
         .el-button {
             padding: 18px 24px;
             height: 36px;
-            border-radius: 20px;
         }
     }
     div.right {

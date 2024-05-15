@@ -24,7 +24,8 @@ const handleClick = () => {
                 id="logoc"
                 @click="handleClick()" />
         </div>
-        <h1>PCL GitView</h1>
+        <h1 style="cursor: pointer" @click="$router.push('/')">PCL GitView</h1>
+        <el-tag type="warning">先遣体验版本</el-tag>
     </div>
 </template>
 
@@ -41,6 +42,7 @@ div.custom-header {
     }
     h1 {
         margin-left: 24px;
+        margin-right: 16px;
     }
 }
 </style>

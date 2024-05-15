@@ -1,7 +1,7 @@
 // Create App
 import { createApp } from "vue";
 import App from "./App.vue";
-import "@/assets/main.css";
+import "./assets/main.css";
 const app = createApp(App);
 
 // Plugin Loading
@@ -36,9 +36,3 @@ window
     .matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", matchTheme);
 matchTheme(window.matchMedia("(prefers-color-scheme: dark)"));
-
-// Debugging
-import { fetchAllIssues } from "./common/fetchIssue";
-fetchAllIssues().then(resp => {
-    console.log(resp);
-})
