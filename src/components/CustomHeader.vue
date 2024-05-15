@@ -39,7 +39,7 @@ matchTheme(window.matchMedia("(prefers-color-scheme: dark)"));
         </div>
         <h1 style="cursor: pointer" @click="$router.push('/')">PCL GitView</h1>
         <el-tag :effect="rea.theme" type="warning">先遣体验版本</el-tag>
-        <el-tag :effect="rea.theme" type="warning">v2.0.1</el-tag>
+        <el-tag :effect="rea.theme" type="warning">v2.0.2</el-tag>
     </div>
 </template>
 

@@ -60,10 +60,7 @@ onMounted(() => {
         localStorage.getItem("X-Data") === undefined ||
         localStorage.getItem("X-Data") === null
     ) {
-        fetch(
-            "http://localhost:3001/getList"
-            // "http://154.7.177.68:3101/getList"
-        ).then(async (res) => {
+        fetch("http://154.7.177.68:3101/getIssueList").then(async (res) => {
             const data = await res.json();
             localStorage.setItem("X-Data", JSON.stringify(data));
             loadData(data);
