@@ -1,15 +1,28 @@
 <script setup>
 import LogoCard from "@/components/LogoCard.vue";
+import { reactive } from "vue";
 
 const emit = defineEmits(["logoClick"]);
 
 const handleClick = () => {
     emit("logoClick");
-    // document.getElementById("logoc").classList.toggle("shake")
-    // setTimeout(() => {
-    //     document.getElementById("logoc").classList.toggle("shake")
-    // }, 700);
 };
+
+const rea = reactive({
+    theme: null,
+});
+// Theme Change Detector
+const matchTheme = (e) => {
+    if (e.matches) {
+        rea.theme = "light";
+    } else {
+        rea.theme = "dark";
+    }
+};
+window
+    .matchMedia("(prefers-color-scheme: dark)")
+    .addEventListener("change", matchTheme);
+matchTheme(window.matchMedia("(prefers-color-scheme: dark)"));
 </script>
 
 <template>
@@ -25,7 +38,8 @@ const handleClick = () => {
                 @click="handleClick()" />
         </div>
         <h1 style="cursor: pointer" @click="$router.push('/')">PCL GitView</h1>
-        <el-tag type="warning">先遣体验版本</el-tag>
+        <el-tag :effect="rea.theme" type="warning">先遣体验版本</el-tag>
+        <el-tag :effect="rea.theme" type="warning">v2.0.1</el-tag>
     </div>
 </template>
 
@@ -34,15 +48,13 @@ div.custom-header {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* &.shake {
-    //     animation: shake 0.7s forwards ease-in-out;
-    } */
+    gap: 8px;
     div.logo {
         width: 50px;
     }
     h1 {
-        margin-left: 24px;
-        margin-right: 16px;
+        margin-left: 16px;
+        margin-right: 8px;
     }
 }
 </style>

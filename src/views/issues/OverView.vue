@@ -2,11 +2,15 @@
 import { onMounted, reactive, ref } from "vue";
 import { applyAnimation } from "@/common/public";
 import CustomLoading from "../../components/CustomLoading.vue";
+import IssueCard from "@/components/IssueCard.vue";
 
 const loadData = (data) => {
     const dataLabel = data[0],
         dataStatus = data[1],
         dataVaild = data[2];
+    issueData.issueNewList = data[3];
+    issueData.issueHighLevelList = data[4];
+    issueData.issueNeedHelpList = data[5];
     const issueBug = dataLabel["· Bug"];
     issueTypeBug.value = issueBug;
     const issueFeat = dataLabel["· 优化"];
@@ -27,6 +31,9 @@ const loadData = (data) => {
 
 const issueData = reactive({
     data: null,
+    issueNewList: [],
+    issueHighLevelList: [],
+    issueNeedHelpList: [],
     isLoadingFinish: false,
 });
 const issueTypeBug = ref(0);
@@ -54,8 +61,8 @@ onMounted(() => {
         localStorage.getItem("X-Data") === null
     ) {
         fetch(
-            // "http://localhost:3001/getList"
-            "http://154.7.177.68:3101/getList"
+            "http://localhost:3001/getList"
+            // "http://154.7.177.68:3101/getList"
         ).then(async (res) => {
             const data = await res.json();
             localStorage.setItem("X-Data", JSON.stringify(data));
@@ -69,6 +76,7 @@ onMounted(() => {
         issueData.data = data;
         issueData.isLoadingFinish = true;
     }
+    console.log(issueData);
 });
 </script>
 
@@ -144,15 +152,134 @@ onMounted(() => {
                     </el-col>
                 </el-row>
             </el-card>
+            <el-row
+                :gutter="20"
+                style="
+                    height: calc(100% - 20px - 20px - 120px - 20px);
+                    margin-top: 20px;
+                ">
+                <el-col :span="8">
+                    <el-card class="issueDisplayCard">
+                        <template #header>
+                            <div class="card-header">
+                                <span>新反馈列表</span>
+                            </div>
+                        </template>
+                        <div class="content">
+                            <div
+                                class="empty"
+                                v-if="
+                                    issueData.issueNewList !== undefined &&
+                                    issueData.issueNewList.length === 0
+                                ">
+                                <el-empty
+                                    :image-size="200"
+                                    description="暂无新反馈" />
+                            </div>
+                            <el-scrollbar v-else max-height="auto">
+                            </el-scrollbar>
+                        </div>
+                    </el-card>
+                </el-col>
+                <el-col :span="8">
+                    <el-card class="issueDisplayCard">
+                        <template #header>
+                            <div class="card-header">
+                                <span>重要反馈列表</span>
+                            </div>
+                        </template>
+                        <div class="content">
+                            <div
+                                class="empty"
+                                v-if="
+                                    issueData.issueHighLevelList !==
+                                        undefined &&
+                                    issueData.issueHighLevelList.length === 0
+                                ">
+                                <el-empty
+                                    :image-size="200"
+                                    description="暂无重要反馈" />
+                            </div>
+                            <el-scrollbar
+                                v-else
+                                max-height="calc(100vh - 60px - 40px - 160px - 20px - 20.8px - 20px - 40px - 60px)"
+                                :noresize="true">
+                                <issue-card
+                                    v-for="item in issueData.issueHighLevelList"
+                                    style="margin-bottom: 8px"
+                                    :issueId="item.issueId"
+                                    :issueStatus="item.issueStatus"
+                                    :issueTitle="item.issueTitle"
+                                    :labels="item.labels" />
+                            </el-scrollbar>
+                        </div>
+                    </el-card>
+                </el-col>
+                <el-col :span="8">
+                    <el-card class="issueDisplayCard">
+                        <template #header>
+                            <div class="card-header">
+                                <span>需要帮助反馈列表</span>
+                            </div>
+                        </template>
+                        <div class="content">
+                            <div
+                                class="empty"
+                                v-if="
+                                    issueData.issueHighLevelList !==
+                                        undefined &&
+                                    issueData.issueHighLevelList.length === 0
+                                ">
+                                <el-empty
+                                    :image-size="200"
+                                    description="暂无需要帮助反馈" />
+                            </div>
+                            <el-scrollbar
+                                v-else
+                                max-height="calc(100vh - 60px - 40px - 160px - 20px - 20.8px - 20px - 40px - 60px)"
+                                :noresize="true">
+                                <issue-card
+                                    v-for="item in issueData.issueNeedHelpList"
+                                    style="margin-bottom: 8px"
+                                    :issueId="item.issueId"
+                                    :issueStatus="item.issueStatus"
+                                    :issueTitle="item.issueTitle"
+                                    :labels="item.labels" />
+                            </el-scrollbar>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
         </div>
         <custom-loading v-if="!issueData.isLoadingFinish" />
     </div>
 </template>
 
 <style scoped lang="less">
-div.OverView {
+div.OverView,
+div.data {
     width: 100%;
     height: 100%;
+}
+
+div.content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100%;
+    justify-content: center;
+    div.empty {
+        transform: translateY(-24px);
+    }
+}
+
+.el-card.issueDisplayCard {
+    min-height: 100%;
+    max-height: calc(100vh - 60px - 40px - 160px - 20px - 40px - 5px);
+}
+
+.el-scrollbar {
+    margin-bottom: 10px;
 }
 
 .el-col {

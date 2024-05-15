@@ -7,20 +7,14 @@ body {
     user-select: none;
 }
 
-/* @keyframes shake {
-    0% {
-        rotate: 0deg;
-    }
-    30% {
-        rotate: -1deg;
-    }
-    60% {
-        rotate: 1deg;
-    }
-    90% {
-        rotate: -1deg;
-    }
-    100% {
-        rotate: 0deg;
-    }
-} */
+.el-card.issueDisplayCard > .el-card__body {
+    height: calc(
+        100vh - 60px - 40px - 160px - 20px - 20.8px - 20px - 40px - 60px
+    );
+    padding-top: 29px;
+    padding-right: 8px;
+}
+
+.el-scrollbar__view > .el-card:last-child {
+    margin-bottom: 3.5px !important;
+}
